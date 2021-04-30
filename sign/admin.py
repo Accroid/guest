@@ -8,9 +8,10 @@ class EventAdmin(admin.ModelAdmin):
     search_fields = ['name']
     #过滤器
     list_filter = ['status']
+
 class GuestAdmin(admin.ModelAdmin):
     list_display = ['realname','phone','email','sign','create_time','event']
-        # 手机号搜索
+    # 手机号搜索
     search_fields = ['realname', 'phone']
     # 过滤器
     list_filter = ['sign']
