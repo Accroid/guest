@@ -3,6 +3,7 @@ from django.http import HttpResponse,HttpResponseRedirect
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from sign.models import Event,Guest
+from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 # Create your views here.
 
 def index(request):
@@ -48,4 +49,21 @@ def search_name(request):
 def guest_manage(request):
     username = request.session.get('user',"")
     guest_list = Guest.objects.all()
+    #每页显示2条数据
+    paginator = Paginator(guest_list,2)
+    #通过get请求得到当前要显示第几页的数据
+    page = request.GET.get('page')
+    try:
+        contacts = paginator.page(page)
+    except PageNotAnInteger:
+        #如果page不是整数，取第一页面数据
+        contacts = paginator.page(paginator.num_pages)
     return render(request,"guest_manage.html",{"user":username,"guests":guest_list})
+
+#嘉宾搜索
+@login_required
+def search_name(request):
+    username = request.session.get('user',"")
+    search_name = request.GET.get('name',"")
+    guest_list = Guest.objects.filter(name__contains=search_name)
+    return render((request,"guest_manage",{"user":username,"events":guest_list}))
