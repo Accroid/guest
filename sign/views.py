@@ -105,3 +105,11 @@ def sign_index_action(request,eid):
         return render(request,'sign_index.html',{'event':event,
                                                  'hint':'sign in success!',
                                                  'guest':result})
+
+#退出登录
+@login_required
+def logout(request):
+    #退出登录
+    auth.logout(request)
+    response = HttpResponseRedirect('/index/')
+    return response
