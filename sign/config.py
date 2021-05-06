@@ -1,0 +1,10 @@
+id = 1
+name = 'oneplus 3 event'
+status = True
+limit = 2000
+address = 'shenzhen'
+start_time = '2016-08-31 02:18:22'
+event_id = 1
+realname ='alen'
+phone = '13911326418'
+email = phone+"qq.com"

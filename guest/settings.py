@@ -25,7 +25,7 @@ SECRET_KEY = 'j6#3k&xv#zaaks4!%9%z3=^t+853s0=r!0ab@2lno5ir&x9rd3'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #'sign.apps.SignConfig',
+    # 'sign.apps.SignConfig',
     'sign',
     'bootstrap3',
 ]

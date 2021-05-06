@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
+{#    <meta charset="UTF-8">#}
     <!--加载bootstrap3应用-->
     {% load bootstrap3 %}
     <!--加载bootstrap3 CSS-->
     {% bootstrap_css %}
+{#    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">#}
     <!--加载bootstrap3 javascript-->
+{#    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js">#}
     {% bootstrap_javascript %}
     <title>Event Manage Page</title>
 </head>
@@ -17,7 +19,7 @@
         <div class="navbar-header">
             <a class="navbar-brand" href="/event_manage/">Guest Manage System</a>
         </div>
-        <div id="navbar" class="collapsed navbar-collapse">
+        <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <li class="active">
                     <a href="#">发布会</a>
@@ -57,6 +59,7 @@
                 <th>状态</th>
                 <th>地址</th>
                 <th>时间</th>
+                <th>签到</th>
             </tr>
             </thead>
             <tbody>
