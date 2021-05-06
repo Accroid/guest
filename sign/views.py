@@ -4,6 +4,7 @@ from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from sign.models import Event,Guest
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
+from django.shortcuts import render,get_object_or_404
 # Create your views here.
 
 def index(request):
@@ -67,3 +68,40 @@ def search_name(request):
     search_name = request.GET.get('name',"")
     guest_list = Guest.objects.filter(name__contains=search_name)
     return render((request,"guest_manage",{"user":username,"events":guest_list}))
+
+#签到页面
+@login_required
+def sign_index(request,eid):
+    #get_object_or_404 如果对象不存在则抛出http404异常
+    event = get_object_or_404(Event,id = eid)
+    return render(request,'sign_index.html',{'event':event})
+
+#签到动作
+@login_required
+def sign_index_action(request,eid):
+    event = get_object_or_404(Event,id = eid)
+    phone = request.POST.get("phone","")
+    print(phone)
+    #验证手机号在guest表内是否存在
+    result = Guest.objects.filter(phone = phone)
+    #不存在则提示phone error.
+    if not result:
+        return render(request,"sign_index.html",{"event":event,"hint":'phone error.'})
+
+    #通过手机号和发布会id来查询guest表
+    result = Guest.objects.filter(phone = phone,event_id=eid)
+    #如果不匹配，则提示 event id or phone error
+    if not result:
+        return render(request,'sign_index.html',{"event":event,"hint":'event id or phone error.'})
+
+    result = Guest.objects.filter(phone = phone,event_id=eid)
+    #如果不匹配，则提示用户已经签到过
+    if not result:
+        return render(request,'sign_index.html',{'event':event,'hint':'user has sign in.'})
+
+    #否则就进行签到动作，修改sign=1，提示用户签到成功
+    else:
+        Guest.objects.filter(phone=phone,event_id=eid).update(sign='1')
+        return render(request,'sign_index.html',{'event':event,
+                                                 'hint':'sign in success!',
+                                                 'guest':result})
